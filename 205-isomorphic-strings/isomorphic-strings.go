@@ -1,16 +1,26 @@
 func isIsomorphic(s string, t string) bool {
-    mappingStoT := make(map[byte]byte)
-    mappingTtoS := make(map[byte]byte)
+    if len(s) != len(t) {
+        return false
+    }
+    
+    sMap := make(map[byte]byte, len(s))
+    tMap := make(map[byte]byte, len(t))
 
     for i := 0; i < len(s); i++ {
-        c1 := s[i]
-        c2 := t[i]
-
-        if mappingStoT[c1] == 0 && mappingTtoS[c2] == 0 {
-            mappingStoT[c1] = c2
-            mappingTtoS[c2] = c1
-        } else if mappingStoT[c1] != c2 || mappingTtoS[c2] != c1 {
-            return false
+        sCh, tCh := s[i], t[i]
+        if v, ok := sMap[sCh]; ok {
+            if v != tCh {
+                return false
+            }
+        } else {
+            sMap[sCh] = tCh
+        }
+        if v, ok := tMap[tCh]; ok {
+            if v != sCh {
+                return false
+            }
+        } else {
+            tMap[tCh] = sCh
         }
     }
 
