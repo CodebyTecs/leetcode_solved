@@ -1,0 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isBalanced(root *TreeNode) bool {
+	return height(root) != -1
+}
+
+func height(node *TreeNode) int {
+	if node == nil {
+		return 0
+	}
+
+	lh := height(node.Left)
+	if lh == -1 {
+		return -1
+	}
+
+	rh := height(node.Right)
+	if rh == -1 {
+		return -1
+	}
+
+	if lh-rh > 1 || rh-lh > 1 {
+		return -1
+	}
+
+	if lh > rh {
+		return lh + 1
+	}
+	return rh + 1
+}
